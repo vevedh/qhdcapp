@@ -55,7 +55,7 @@
         >Entrez votre email et mot de passe et si vous n'êtes pas incrit cliquez ci-dessous</q-card-section>
       </q-card>
     </div>
-    <div class="row fit col q-pa-xs">
+    <div class="row fit justify-center q-pa-xs">
     <q-btn
               color="primary"
               text-color="white"
