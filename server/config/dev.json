@@ -1,0 +1,7 @@
+{
+  "smtp_server":"pro1.mail.ovh.net",
+  "smtp_user":"herve@hdcapp.pro",
+  "smtp_from":"herve@hdcapp.pro",
+  "smtp_password":"d@nZel!77",
+  "mongodb": "mongodb://vevedh:eclipses@localhost:27019/dbveve?authSource=admin"
+}

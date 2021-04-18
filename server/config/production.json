@@ -1,0 +1,10 @@
+{
+  "host": "hdcapp.pro",
+  "port": "80",
+  "smtp_server":"pro1.mail.ovh.net",
+  "smtp_user":"herve@hdcapp.pro",
+  "smtp_password":"d@nZel!77",
+  "private_key":"private.key",
+  "private_cert":"www_hdcapp_pro.crt",
+  "mongodb": "mongodb://vevedh:d%40nZel!77@localhost:27017/dbveve?authSource=admin"
+}
