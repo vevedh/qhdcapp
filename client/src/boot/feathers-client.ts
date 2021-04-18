@@ -10,7 +10,7 @@ import Vue from "vue";
 
 //const restClient = rest("http://localhost:3030");
 
-const apiUrl = window.location.origin.replace('3030','8080');//"http://localhost:3030"//"https://svrdsiweb.agglo.local:3050";//"https://www.hdcapp.pro";//import.meta.env.VITE_APP1_API_URL as string
+const apiUrl = window.location.origin.replace('8080','3030');//"http://localhost:3030"//"https://svrdsiweb.agglo.local:3050";//"https://www.hdcapp.pro";//import.meta.env.VITE_APP1_API_URL as string
 const socket = io(apiUrl, { transports: ['websocket'] })
 
 const feathersClient = feathers()
