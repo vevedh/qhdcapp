@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'RegisterPage',
@@ -101,7 +101,7 @@ export default {
   },
   computed: {
     ...mapGetters('auth', ['isAuthenticated', 'user']),
-    async checkIsAuthenticated() {
+    /*async checkIsAuthenticated() {
       console.log('Init');
       let auth = await this.$store.dispatch('auth/authenticate').catch(err => {
         console.log('Non authentifié!');
@@ -114,37 +114,19 @@ export default {
           this.$router.replace('/');
         } catch (error) {}
       }
-    }
+    }*/
   },
   setup(props, context) {
     console.log('Propriétées :', props);
     console.log('Context :', context);
   },
   methods: {
-    onSubmit(email, password) {
-      console.log('Click');
-      this.$store
-        .dispatch('auth/authenticate', { strategy: 'local', email, password })
-        .then(res => {
-          console.log('Result :', res.user);
-          this.$router.replace('/');
-        })
-        // Just use the returned error instead of mapping it from the store.
-        .catch(err => {
-          // Convert the error to a plain object and add a message.
-          console.log('Erreur fatale');
-          let type = err.className;
-          err = Object.assign({}, err);
-          err.message =
-            type === 'not-authenticated'
-              ? 'Incorrect email or password.'
-              : 'An error prevented login.';
-
-          this.error = err;
-        });
-    },
+    ...mapActions('users',{ createNewUser:'create'}),
     onRegister(email, password) {
-      this.$router.push('/login/register');
+      console.log('Click');
+      this.createNewUser([{email:email,password:password}]).then((res)=>{
+        console.log("Utilisateur crée , vérifiez votre email :",res)
+      })
     }
   }
 };
