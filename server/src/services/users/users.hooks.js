@@ -1,3 +1,4 @@
+const logger = require('../../logger')
 const { authenticate } = require('@feathersjs/authentication').hooks;
 
 const {  disallow, iff, isProvider, preventChanges  } = require('feathers-hooks-common');
@@ -126,10 +127,37 @@ const checkReg = async (context) => {
 
   const { app, method, result, params } = context;
 
-  console.log(context.params.query);
+
         if (context.params.query.email) {
           context.params.query.email.$regex = new RegExp(context.params.query.email.$regex, 'igm');
         }
+
+  return context
+}
+
+
+const checkIsUnique = async (context) => {
+
+
+
+
+  //logger.info("Check is result : %j",result)
+  //logger.info("Check is params : %j",params)
+  logger.info("Check is data : %j",context.data)
+  let results = await context.app.service('users').find({ query: { email: context.data.email}});
+  logger.info("result : %j",results)
+  if (results.data.length >= 1) {
+    logger.info(`Ce compte ${context.data.email} existe déjà`)
+    throw new Error(`Ce compte ${context.data.email} existe déjà`);
+  }
+  //accountService(context.app).checkIsUnique()
+  //accountService(context.app).notifier('resendVerifySignup', context.result)
+  /*
+
+  context => {
+        accountService(context.app).notifier('resendVerifySignup', context.result)
+      },
+      */
 
   return context
 }
@@ -142,7 +170,9 @@ module.exports = {
     find: [ authenticate('jwt') ],
     get: [ authenticate('jwt') ],
     create: [
+
       hashPassword('password'),
+      checkIsUnique,
       verifyHooks.addVerification()
     ],
     update: [ disallow('external') ],//hashPassword('password'),  authenticate('jwt')

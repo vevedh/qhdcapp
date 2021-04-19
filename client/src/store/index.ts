@@ -7,6 +7,7 @@ import { FeathersVuex, makeAuthPlugin } from '../boot/feathers-client'
 import users from './services/users'
 import tables from './services/tables'
 import ConfInfos from './services/conf-infos'
+import authManagement from './services/authManagement'
 //import adinfos from './adinfos'
 //import teamviewer from './teamviewer'
 //import adminModule from './admin'
@@ -41,6 +42,7 @@ export default wrapper(function ({ Vue }) {
       users,
       tables,
       ConfInfos,
+      authManagement,
       makeAuthPlugin({ userService: 'users'})
     ],
 

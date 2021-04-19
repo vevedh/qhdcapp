@@ -42,7 +42,7 @@ const checkReg = (context: any) => {
 feathersClient.service(servicePath).hooks({
   before: {
     all: [],
-    find: [checkReg],
+    find: [],
     get: [],
     create: [],
     update: [],

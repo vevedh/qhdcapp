@@ -4,18 +4,20 @@ const MongoClient = require('mongodb').MongoClient
 
 module.exports = function (app) {
   const connection = app.get('mongodb')
+  logger.info('Database cnx string : ' + connection)
   const database = connection.substr(connection.lastIndexOf('/') + 1).replace('?authSource=admin', '')
   logger.info('Database : ' + database)
-  console.log("Database :",database)
 
-  const mongoClient = MongoClient.connect(connection, { useNewUrlParser: true, useUnifiedTopology: true })
+
+  const mongoClient = MongoClient.connect(app.get('mongodb'), { useNewUrlParser: true, useUnifiedTopology: true  })
     .then((client) => {
-      const dbAdmin = client.db().admin()
-      app.set('dbAdmin', dbAdmin)
+      //const dbAdmin = client.db().admin()
+      //app.set('dbAdmin', dbAdmin)
       app.set('currentDatabase', database)
       app.set('mongodb_ok',true)
       return client.db(database)
     }).catch((err) => {
+      logger.info("Erreur access mongodb :%j",err)
       app.set('mongodb_ok',false)
       logger.info("Votre base de donnée Mongodb n'est pas accessible ou est non configurée!")
       logger.info(`Dans le fichier de configuration vous devez avoir une chaine de connexion accessible!\n

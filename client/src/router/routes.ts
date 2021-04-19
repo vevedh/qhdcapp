@@ -24,21 +24,26 @@ const routes: RouteConfig[] = [
     ]
   },
   {
-    path: '/example',
-    component: () => import('layouts/MainLayout.vue'),
+    path: '/verify',
+    component: () => import('layouts/LoginLayout.vue'),
     children: [
       {
-        path: '', component: () => import('pages/Index.vue'),
-        meta: { requiresAuth:true ,title:'Dashboard'}
+        path: '',
+        component: () => import('pages/Verify.vue'),
       }
     ]
   },
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    meta: { requiresAuth:true ,title:'Dashboard'}
-
+    children: [
+      {
+        path: '', component: () => import('pages/Profil.vue'),
+        meta: { requiresAuth:true ,title:'Informations Utilisateur'}
+      }
+    ]
   },
+
 
   // Always leave this as last one,
   // but you can also remove it

@@ -24,14 +24,14 @@ export default  boot(async ({ router , store }  ) => {
               message: `Vous n'avez pas accès à cette page, contactez l\'administrateur.`,
               color: "negative"
             });
-            next("/account");
+            next("/login");
           }
         } else if (
-          to.path === "/" ||
+          //to.path === "/" ||
           to.path === "/login" ||
           to.path === "/register"
         ) {
-          next("/account");
+          next("/");
         } else if (!LocalStorage.getItem("feathers-jwt") && to.path !== "/") {
           next("/login");
         } else {

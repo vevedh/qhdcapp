@@ -126,9 +126,6 @@ export default {
 
           this.error = err;
         });
-    },
-    onRegister(email, password) {
-      this.$router.push('/login/register');
     }
   }
 };

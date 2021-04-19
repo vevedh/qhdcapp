@@ -34,6 +34,7 @@
               label="Mot de passe :"
               :dense="dense"
             ></q-input>
+            <div class="col text-center text-red" v-if="successCreated">Utilisateur crée, vérifiez votre messagerie</div>
           </q-form>
         </q-card-section>
         <q-card-actions class="row items-center justify-center q-pa-none">
@@ -56,10 +57,10 @@
         >Vous recevrez un mail de confirmation
         </q-card-section>
         <q-card-section class="row items-center justify-center q-pb-md q-pt-none">
-          <div class="q-gutter-xl">
+          <div class="q-gutter-xs">
             <q-btn
               color="primary"
-              icon="lock"
+              icon="arrow_left"
               text-color="white"
               no-caps
               label="Retour"
@@ -86,12 +87,15 @@
 </template>
 
 <script>
+
+import {  Notify } from "quasar";
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'RegisterPage',
   data() {
     return {
+      successCreated:false,
       email: '',
       password: '',
       url: 'logo_hdcapp.png',
@@ -101,20 +105,6 @@ export default {
   },
   computed: {
     ...mapGetters('auth', ['isAuthenticated', 'user']),
-    /*async checkIsAuthenticated() {
-      console.log('Init');
-      let auth = await this.$store.dispatch('auth/authenticate').catch(err => {
-        console.log('Non authentifié!');
-      });
-      console.log('Auth :', auth);
-
-      if (auth.user) {
-        // this.user = auth.user;
-        try {
-          this.$router.replace('/');
-        } catch (error) {}
-      }
-    }*/
   },
   setup(props, context) {
     console.log('Propriétées :', props);
@@ -122,6 +112,7 @@ export default {
   },
   mounted() {
     console.log("Store :",this.$store)
+    console.log("Feathers :",this.$FeathersVuex)
   },
   methods: {
     ...mapActions('users',{ createNewUser:'create'}),
@@ -129,6 +120,14 @@ export default {
       console.log('Click');
       this.createNewUser([{email:email,password:password}]).then((res)=>{
         console.log("Utilisateur crée , vérifiez votre email :",res)
+        if (res && res.email!='') {
+          this.successCreated = true
+        }
+      }).catch((err)=>{
+        Notify.create({
+              message: `Erreur : Ce compte existe déjà ou ne peut être crée!`,
+              color: "negative"
+            });
       })
     }
   }

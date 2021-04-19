@@ -12,10 +12,13 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          {{title}}
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>
+          [{{(user)?user.email:null}}]
+          <q-btn size="md" icon="logout"  :dense="true" @click="onExit()"/>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -32,7 +35,7 @@
         >
           Essential Links
         </q-item-label>
-        <EssentialLink
+        <MenuComponent
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
@@ -47,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import EssentialLink from 'components/EssentialLink.vue'
+import MenuComponent from '../components/Menu.vue'
 
 const linksData = [
   {
@@ -95,15 +98,54 @@ const linksData = [
 ];
 
 import { defineComponent, ref } from '@vue/composition-api';
+import { mapGetters, mapActions } from 'vuex';
 
 export default defineComponent({
   name: 'MainLayout',
-  components: { EssentialLink },
+  components: {
+    MenuComponent
+  },
+  data () {
+    return {
+      title: 'HDCApp'
+    }
+  },
+  computed: {
+    ...mapGetters('auth',['isAuthenticated','user']),
+    ...mapGetters('users',['list']),
+    ...mapGetters('tables',{tables:'list'}),
+
+  },
   setup() {
     const leftDrawerOpen = ref(false);
     const essentialLinks = ref(linksData);
 
     return {leftDrawerOpen, essentialLinks}
+  },
+  mounted () {
+    console.log("Store Racine",this.$store)
+    this.title = document.title;
+  },
+  methods: {
+    ...mapActions('auth',['authenticate','logout']),
+    onExit() {
+      //console.log("Store ",this.$store)
+      //this.$store.commit('auth/logout')
+      this.$store.dispatch('auth/logout').then((exit)=>{
+        console.log("Exit :",exit);
+        this.$router.replace('/login')
+      })
+    }
+  },
+  watch: {
+    '$route':{
+        handler: (to, from) => {
+          console.log("Route change :",to.path)
+          document.title = to.meta.title
+
+        },
+         immediate: true
+      }
   }
 });
 </script>

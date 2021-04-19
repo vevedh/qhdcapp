@@ -27,6 +27,7 @@
     "test": "npm run lint && npm run jest",
     "lint": "eslint src/. test/. --config .eslintrc.json --fix",
     "dev": "set NODE_ENV=dev&&nodemon src/",
+    "docker": "set NODE_ENV=docker&&nodemon src/",
     "start": "node src/",
     "jest": "jest  --forceExit"
   },

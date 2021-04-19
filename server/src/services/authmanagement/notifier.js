@@ -1,7 +1,7 @@
 module.exports = function(app) {
 
   function getLink(type, hash) {
-    const url = 'http://localhost:3030/' + type + '?token=' + hash
+    const url = `http://${app.get('host')}:8080/` + type + '?token=' + hash
     return url
   }
 
@@ -23,8 +23,12 @@ module.exports = function(app) {
           email = {
              from: app.get('smtp_from'),
              to: user.email,
-             subject: 'Verify Signup',
-             html: tokenLink
+             subject: 'HDCApp: Vérification d\'inscription',
+             html: `Bonjour,<br>
+             Merci de nous faire confiance, cliquez sur le lien ci-dessous pour confirmer votre adresse e-mail<br>
+             ${tokenLink}<br>
+             Si cela ne fonctionne pas vous pouvez recopier le lien et le coller dans la barre d'adresse de votre navigateur<br>
+             `
           }
           return sendEmail(email)
           break
@@ -34,8 +38,8 @@ module.exports = function(app) {
           email = {
              from: app.get('smtp_from'),
              to: user.email,
-             subject: 'Confirm Signup',
-             html: 'Thanks for verifying your email'
+             subject: 'HDCApp: Confirmation d\'inscription',
+             html: 'Merci de votre confiance et à bientôt :-)'
           }
           return sendEmail(email)
           break
