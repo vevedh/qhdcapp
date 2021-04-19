@@ -120,6 +120,9 @@ export default {
     console.log('Propriétées :', props);
     console.log('Context :', context);
   },
+  mounted() {
+    console.log("Store :",this.$store)
+  },
   methods: {
     ...mapActions('users',{ createNewUser:'create'}),
     onRegister(email, password) {
