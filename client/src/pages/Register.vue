@@ -44,7 +44,7 @@
               text-color="white"
               no-caps
               label="Inscription"
-              @click="onRegiter(email,password)"
+              @click="onRegister(email,password)"
               :disable="(email=='')&&(password=='')"
             />
 
