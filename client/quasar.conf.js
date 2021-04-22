@@ -53,7 +53,7 @@ module.exports = configure(function (/* ctx */) {
 
     // Full list of options: https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
-      vueRouterMode: 'history', // available values: 'hash', 'history'
+      vueRouterMode: 'hash', // available values: 'hash', 'history'
 
       // transpile: false,
 
@@ -67,6 +67,7 @@ module.exports = configure(function (/* ctx */) {
       // showProgress: false,
       // gzip: true,
       // analyze: true,
+      //publicPath:'mysite',
       distDir: 'www',
       appBase:'.',
       vueRouterBase:'./',
@@ -83,6 +84,9 @@ module.exports = configure(function (/* ctx */) {
 
     // Full list of options: https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
+      historyApiFallback: {
+        disableDotRule: true,
+      },
       https: false,
       port: 8080,
       proxy: {

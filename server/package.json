@@ -48,6 +48,7 @@
     "@feathersjs/socketio": "^4.5.11",
     "@feathersjs/transport-commons": "^4.5.11",
     "compression": "^1.7.4",
+    "connect-history-api-fallback": "^1.6.0",
     "cors": "^2.8.5",
     "feathers-authentication-management": "^3.1.0",
     "feathers-mailer": "^3.0.1",
@@ -60,6 +61,7 @@
     "nedb": "^1.8.0",
     "nodemailer-smtp-transport": "^2.7.4",
     "serve-favicon": "^2.5.0",
+    "serve-static": "^1.14.1",
     "winston": "^3.3.3"
   },
   "devDependencies": {
